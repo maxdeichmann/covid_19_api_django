@@ -21,7 +21,3 @@ data:
 ```bash
 kubectl apply -f dev_ops
 ```
-
-Run the project
-
-npm start
