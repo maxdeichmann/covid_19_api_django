@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covid19api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: covid19api
+  template:
+    metadata:
+      labels:
+        app: covid19api
+    spec:
+        imagePullSecrets:
+          - name: dockerhubsecret
+        containers:        
+        - name: covid19api
+          image: mdeichmann/covid19api:latest
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 8000
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+
+            - name: POSTGRES_HOST
+              value: postgres-service
+            
+            - name: POSTGRES_NAME
+              value: kubernetes_django
+          
+          volumeMounts:
+            - name: postgres-volume-mount
+              mountPath: /var/lib/busybox
+
+        volumes:
+        - name: postgres-volume-mount
+          persistentVolumeClaim:
+            claimName: postgres-pvc

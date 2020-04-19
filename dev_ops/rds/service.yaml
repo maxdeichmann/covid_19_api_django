@@ -1,0 +1,7 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgres-service
+spec:
+  type: ExternalName
+  externalName: kubernetes-django.c51mn9m3pxuj.eu-central-1.rds.amazonaws.com

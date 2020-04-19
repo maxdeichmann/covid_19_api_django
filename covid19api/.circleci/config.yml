@@ -1,0 +1,11 @@
+version: 2 # CircleCI version
+jobs:
+  build:
+    machine:
+     image: circleci/classic:latest # Use a Linux VM instead of docker environment
+    working_directory: ~/repo # Default working directory, where your project will be cloned
+    steps:
+      - checkout
+      - run: docker-compose up -d
+      - run: docker-compose run web python manage.py migrate
+      - run: docker-compose run web python manage.py test

@@ -1,0 +1,14 @@
+apiVersion: v1
+imagePullSecrets:
+- name: dockerhubsecret
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2020-03-16T21:33:24Z"
+  name: default
+  namespace: default
+  selfLink: /api/v1/namespaces/default/serviceaccounts/default
+  uid: a39f931a-fd66-4f73-8fe5-7f9ffc91da17
+secrets:
+- name: default-token-2plw7
+imagePullSecrets:
+- name: dockerhubsecret

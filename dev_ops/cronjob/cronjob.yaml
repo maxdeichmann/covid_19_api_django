@@ -1,0 +1,27 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: daily-csv-extraction
+spec:
+  schedule: "0,15,30,45 * * * *" # scheduled start
+  startingDeadlineSeconds: 15 # must start at seconds after boot
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: daily-csv-extraction
+        spec:
+          restartPolicy: OnFailure 
+          containers:
+          - name: main
+            image: mdeichmann/covid19api-cron:latest
+            env:
+            - name: API_HOST
+              value: covid19api-service:8000
+            - name: POST_PATH
+              value: countries/
+            - name: SOURCE
+              value: https://covid.ourworldindata.org/data/full_data.csv
+          imagePullSecrets:
+          - name: dockerhubsecret
