@@ -3,7 +3,7 @@ jobs:
   build:
     machine:
      image: circleci/classic:latest # Use a Linux VM instead of docker environment
-    working_directory: ~/repo # Default working directory, where your project will be cloned
+    working_directory: ~/repo/covid19api # Default working directory, where your project will be cloned
     steps:
       - checkout
       - run: docker-compose up -d
